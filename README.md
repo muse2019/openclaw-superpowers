@@ -1,4 +1,4 @@
-# openclaw-superpower（OpenClaw 插件版 Superpowers）
+# openclaw-superpowers（OpenClaw 插件版 Superpowers）
 
 把 **Claude Code Superpowers** 以 **OpenClaw 原生插件**的方式接入：
 
