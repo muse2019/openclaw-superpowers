@@ -1,0 +1,7 @@
+{
+  "origin": "captured",
+  "parent_skill_ids": [],
+  "change_summary": "Captured the pattern of using run_shell for simple command execution tasks instead of shell_agent when commands are straightforward and don't require error recovery or complex scripting.",
+  "created_by": "openspace",
+  "tags": []
+}
