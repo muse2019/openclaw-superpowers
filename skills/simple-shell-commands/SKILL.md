@@ -9,7 +9,7 @@ description: "Use run_shell for straightforward command execution instead of she
 
 Use `run_shell` when:
 - You have a **simple, straightforward command** that you know will work
-- The command is **short and self-contained** (e.g., `echo`, `ls`, `cat`, `pwd`)
+- The command is **short and self-contained** (e.g., `echo`, `cat`, `pwd`)
 - You don't need **automatic error recovery** or complex logic
 - You want **direct execution** without the overhead of an intelligent agent
 - The command is **deterministic** and doesn't require conditional execution
@@ -28,9 +28,6 @@ Use `shell_agent` when:
 # Simple echo command
 run_shell("echo hello world")
 
-# List directory contents
-run_shell("ls -la")
-
 # Check current directory
 run_shell("pwd")
 
@@ -39,6 +36,17 @@ run_shell("cat config.txt")
 
 # Simple file operation
 run_shell("cp source.txt destination.txt")
+```
+
+### 📁 Directory Listing Note:
+For directory listing, prefer the dedicated `list_dir` tool over `run_shell('ls')` when available. The `list_dir` tool provides structured output and is more reliable across platforms.
+
+```python
+# Preferred method for directory listing
+list_dir()  # Returns structured directory information
+
+# Alternative if list_dir is not available
+run_shell("ls -la")
 ```
 
 ### ❌ Inappropriate use of run_shell:
@@ -65,10 +73,11 @@ shell_agent("Figure out why the service isn't starting and fix it")
 ## Decision Flow
 
 1. **Is the command a single, simple operation?** → Use `run_shell`
-2. **Do you need automatic error recovery?** → Use `shell_agent`
-3. **Is the command deterministic and known to work?** → Use `run_shell`
-4. **Does the task require figuring out how to do something?** → Use `shell_agent`
-5. **Is it just executing a known command?** → Use `run_shell`
+2. **Is there a dedicated tool for this operation?** → Use the dedicated tool (e.g., `list_dir` for directory listing)
+3. **Do you need automatic error recovery?** → Use `shell_agent`
+4. **Is the command deterministic and known to work?** → Use `run_shell`
+5. **Does the task require figuring out how to do something?** → Use `shell_agent`
+6. **Is it just executing a known command?** → Use `run_shell`
 
 ## Performance Considerations
 
@@ -80,7 +89,8 @@ shell_agent("Figure out why the service isn't starting and fix it")
 ## Best Practices
 
 1. **Keep it simple**: If you can write the exact command, use `run_shell`
-2. **Know your tools**: Understand what each shell function is optimized for
-3. **Minimize overhead**: Don't use `shell_agent` for tasks it doesn't need
-4. **Be explicit**: Write clear, complete commands for `run_shell`
-5. **Test first**: If unsure, try `run_shell` first and only use `shell_agent` if you need its features
+2. **Prefer dedicated tools**: Use specialized tools like `list_dir` for directory listing instead of `run_shell('ls')` when available
+3. **Know your tools**: Understand what each shell function is optimized for
+4. **Minimize overhead**: Don't use `shell_agent` for tasks it doesn't need
+5. **Be explicit**: Write clear, complete commands for `run_shell`
+6. **Test first**: If unsure, try `run_shell` first and only use `shell_agent` if you need its features
